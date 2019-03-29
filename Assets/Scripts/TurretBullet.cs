@@ -20,6 +20,8 @@ public class TurretBullet : MonoBehaviour
     void Update()
     {
         Movement();
+
+        CheckIfOutOfBounds();
     }
 
     private void Movement()
@@ -38,10 +40,19 @@ public class TurretBullet : MonoBehaviour
         if (other.tag == "Enemy")
         {
             other.GetComponent<Mob>().TakeDamage(_damage);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
 
-    // NB : Will need pooling system in order to prevent performance drops
+    // Deactivate the bullet if it isn't visible by the camera anymore
+    private void CheckIfOutOfBounds()
+    {
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+        if (viewPos.x < 0f || viewPos.x > 1f || viewPos.y < 0f || viewPos.y > 1f)
+        {
+            gameObject.SetActive(false);
+        }
+
+    }
 }

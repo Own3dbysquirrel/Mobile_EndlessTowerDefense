@@ -16,6 +16,8 @@ public class Turret : MonoBehaviour
     public float reloadTime = 1f;
     private float _reloadTimer = 0f;
 
+    private List<GameObject> _bulletsPool = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,22 +59,19 @@ public class Turret : MonoBehaviour
     {
         _target = _mobsInRange[0].transform;
         _targetDistance = Vector2.Distance(transform.position, _target.transform.position);
-  
-
        
-            // Select the nearest enemy of the list as the target of the turret
-            for (int i = 0; i < _mobsInRange.Count; i++)
+        // Select the nearest enemy of the list as the target of the turret
+        for (int i = 0; i < _mobsInRange.Count; i++)
+        {
+            if (Vector2.Distance(transform.position, _mobsInRange[i].transform.position) < _targetDistance)
             {
-                if (Vector2.Distance(transform.position, _mobsInRange[i].transform.position) < _targetDistance)
-                {
-                    _target = _mobsInRange[i].transform;
-                    _targetDistance = Vector2.Distance(transform.position, _mobsInRange[i].transform.position);
-                }
-            }         
+                _target = _mobsInRange[i].transform;
+                _targetDistance = Vector2.Distance(transform.position, _mobsInRange[i].transform.position);
+            }
+        }         
     }
 
-
-   
+  
 
     void RemoveTargetFromList(Mob target)
     {
@@ -96,17 +95,21 @@ public class Turret : MonoBehaviour
     {
         if(_reloadTimer >= reloadTime)
         {
-            // Fire then reset reloadTimer;
-           GameObject newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation, null);
-           TurretBullet newBulletScript = newBullet.GetComponent<TurretBullet>();
 
-           newBulletScript.target = _target;
+            // Spawn a new bullet
+            GameObject newBullet = GetPooledBullet();
 
-           _reloadTimer = 0;
+            newBullet.transform.position = transform.position;
+            newBullet.transform.rotation = transform.rotation;
+
+            newBullet.GetComponent<TurretBullet>().target = _target;
+
+            // Reset the reloadTimer after the turret fired;
+            _reloadTimer = 0;
         }
         else
         {
-            // Increment reload timer
+            // Increment reload timer between shots
             _reloadTimer += Time.deltaTime;
         }
 
@@ -115,6 +118,26 @@ public class Turret : MonoBehaviour
     private void Upgrade()
     {
 
+    }
+
+    private GameObject GetPooledBullet()
+    {
+        for (int i = 0; i < _bulletsPool.Count; i++)
+        {
+            // Look for an available bullet in the pool
+            if (!_bulletsPool[i].activeInHierarchy)
+            {
+                _bulletsPool[i].SetActive(true);
+                return _bulletsPool[i];
+            }
+        }
+
+        // Otherwise Instantiate a new one
+        GameObject newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation, null);
+
+        _bulletsPool.Add(newBullet);
+
+        return newBullet;
     }
 
     private void SpecialAttack()

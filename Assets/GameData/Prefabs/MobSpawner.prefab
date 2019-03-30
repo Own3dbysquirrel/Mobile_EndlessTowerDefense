@@ -43,3 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db7b1f233437d749afb10cca3f6be45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnabled: 1
+  delayBetweenWaves: 5
+  waveIndex: 0
+  waveDifficulty: 1
+  waveDifficultyMultiplier: 1.1
+  maxMobsOnScreen: 0
+  mobPrefabArray:
+  - {fileID: 7973492598440114357, guid: 34952a0e027590249bd98aed50488a50, type: 3}

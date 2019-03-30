@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TurretBullet : MonoBehaviour
 {
+    [HideInInspector]
     public float _movementSpeed = 1f;
 
+    [HideInInspector]
     public int _damage = 1;
 
     public Transform target;
@@ -26,7 +28,7 @@ public class TurretBullet : MonoBehaviour
 
     private void Movement()
     {
-        if(target)
+        if(target != null && target.gameObject.activeSelf)
         {
             transform.up = target.position - transform.position;
         }
@@ -39,7 +41,9 @@ public class TurretBullet : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<Mob>().TakeDamage(_damage);
+            if(other.GetComponent<Mob>())
+                other.GetComponent<Mob>().TakeDamage(_damage);
+
             gameObject.SetActive(false);
         }
     }

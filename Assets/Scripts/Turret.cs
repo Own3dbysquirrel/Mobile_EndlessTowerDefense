@@ -13,8 +13,16 @@ public class Turret : MonoBehaviour
     private Transform _target;
     private float _targetDistance;
 
-    public float reloadTime = 1f;
+    
     private float _reloadTimer = 0f;
+
+    public int damage = 1;
+    public float reloadTime = 1f;
+    public float bulletSpeed = 3f;
+    
+    public float attackUpgradeMultiplier = 1.1f;
+    public float bulletSpeedUpgradeMultiplier = 1.01f;
+    public float fireSpeedUpgradeDivider = 1.1f;
 
     private List<GameObject> _bulletsPool = new List<GameObject>();
 
@@ -102,7 +110,11 @@ public class Turret : MonoBehaviour
             newBullet.transform.position = transform.position;
             newBullet.transform.rotation = transform.rotation;
 
-            newBullet.GetComponent<TurretBullet>().target = _target;
+            TurretBullet bulletScript = newBullet.GetComponent<TurretBullet>();
+
+            bulletScript.target = _target;
+            bulletScript._damage = damage;
+            bulletScript._movementSpeed = bulletSpeed;
 
             // Reset the reloadTimer after the turret fired;
             _reloadTimer = 0;
@@ -115,11 +127,7 @@ public class Turret : MonoBehaviour
 
     }
 
-    private void Upgrade()
-    {
-
-    }
-
+   
     private GameObject GetPooledBullet()
     {
         for (int i = 0; i < _bulletsPool.Count; i++)
@@ -140,11 +148,7 @@ public class Turret : MonoBehaviour
         return newBullet;
     }
 
-    private void SpecialAttack()
-    {
-
-    }
-
+  
     private void ResetTurretRotation()
     {
         if (_target != null)
@@ -153,5 +157,31 @@ public class Turret : MonoBehaviour
         if (gameObject.transform.rotation != Quaternion.identity)
             gameObject.transform.rotation = Quaternion.identity;
     }
+
+    public void UpgradeAttack()
+    {
+       if((Mathf.Round((float)damage * attackUpgradeMultiplier) == damage))
+        {
+            damage++;
+        }
+       else
+        {
+            damage = (int) Mathf.Round((float)damage * attackUpgradeMultiplier);
+        }
+    }
+
+    public void UpgradeSpeed()
+    {
+        bulletSpeed *= bulletSpeedUpgradeMultiplier;
+        reloadTime /= fireSpeedUpgradeDivider;
+    }
+
+    private void SpecialAttack()
+    {
+
+    }
+
+
+
 
 }

@@ -10,8 +10,6 @@ public class Mob : MonoBehaviour
     private int _life = 1;
     public float MovementSpeed;
 
-    private bool _isAlive = true;
-
     [Tooltip("This value is used in order to determine the composition of the waves. If a wave as a difficulty of 15, it can spawn up to 5 ennemies with a difficulty score of 3")]
     public float difficultyScore = 1f;
 
@@ -26,21 +24,24 @@ public class Mob : MonoBehaviour
 
     private int _baseLife;
 
-   
+   void Awake()
+    {
+        _baseLife = _life;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        _life = (int) Mathf.Round(_life * scalingRatio);
-        _baseLife = _life;
+        _life = (int) Mathf.Round(_baseLife * scalingRatio);        
+        _goldDrop = (int) Mathf.Round(Random.Range(goldDropRange.start, goldDropRange.end + 1) * scalingRatio);                
+        lifeDisplay.text = _life.ToString();      
+    }
 
-        _goldDrop = (int) Mathf.Round(Random.Range(goldDropRange.start, goldDropRange.end + 1) * scalingRatio);
-          
-        
-
+    void OnEnable()
+    {
+        _life = (int) Mathf.Round(_baseLife * scalingRatio);      
+        _goldDrop = (int) Mathf.Round(Random.Range(goldDropRange.start, goldDropRange.end + 1) * scalingRatio);               
         lifeDisplay.text = _life.ToString();
-
-      
     }
 
     // Update is called once per frame
@@ -70,33 +71,19 @@ public class Mob : MonoBehaviour
     {
         _life -= dmg;
         lifeDisplay.text = _life.ToString();
-        if (_life <= 0 && _isAlive)
+        if (_life <= 0)
         {
             Death();
         }
     }
 
     private void Death()
-    {  
+    {
         // This events informs the Player Turrets that the enemy died
-        if(OnTargetDeath != null)
-             OnTargetDeath(this);
-
+        OnTargetDeath?.Invoke(this);
         gameObject.SetActive(false);
     }
 
-    // After the mob is killed, reset its values so it is ready to be pooled again.
-    private void OnDisable()
-    {
-        _isAlive = false;
-        _life = _baseLife;
-        lifeDisplay.text = _life.ToString();
-    }
-
-    private void OnEnable()
-    {
-        _isAlive = true;
-    }
 
     public delegate void DeathEvent(Mob target);
     public event DeathEvent OnTargetDeath;

@@ -23,14 +23,21 @@ public class Mob : MonoBehaviour
     public float scalingRatio = 1;
   
     public Text lifeDisplay;
+
+    private int _baseLife;
+
+   
+
     // Start is called before the first frame update
     void Start()
     {
         _life = (int) Mathf.Round(_life * scalingRatio);
+        _baseLife = _life;
 
-        
         _goldDrop = (int) Mathf.Round(Random.Range(goldDropRange.start, goldDropRange.end + 1) * scalingRatio);
-                
+          
+        
+
         lifeDisplay.text = _life.ToString();
 
       
@@ -65,18 +72,30 @@ public class Mob : MonoBehaviour
         lifeDisplay.text = _life.ToString();
         if (_life <= 0 && _isAlive)
         {
-            _isAlive = false;
             Death();
         }
     }
 
     private void Death()
     {  
+        // This events informs the Player Turrets that the enemy died
         if(OnTargetDeath != null)
              OnTargetDeath(this);
-              
-        //  Destroy(gameObject); 
+
         gameObject.SetActive(false);
+    }
+
+    // After the mob is killed, reset its values so it is ready to be pooled again.
+    private void OnDisable()
+    {
+        _isAlive = false;
+        _life = _baseLife;
+        lifeDisplay.text = _life.ToString();
+    }
+
+    private void OnEnable()
+    {
+        _isAlive = true;
     }
 
     public delegate void DeathEvent(Mob target);

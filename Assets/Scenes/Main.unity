@@ -1125,23 +1125,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8868778614680239153, guid: de3bee1010dee18448f50d20c4526cf9,
         type: 3}
-      propertyPath: bulletSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8868778614680239153, guid: de3bee1010dee18448f50d20c4526cf9,
-        type: 3}
       propertyPath: attackUpgradeMultiplier
-      value: 1.05
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8868778614680239153, guid: de3bee1010dee18448f50d20c4526cf9,
         type: 3}
       propertyPath: bulletSpeedUpgradeMultiplier
-      value: 1.05
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8868778614680239153, guid: de3bee1010dee18448f50d20c4526cf9,
         type: 3}
       propertyPath: fireSpeedUpgradeDivider
-      value: 1.05
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de3bee1010dee18448f50d20c4526cf9, type: 3}
@@ -1214,25 +1209,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5914048280330796819, guid: bd20cacb241bef641b48fae95b840e17,
         type: 3}
-      propertyPath: mobPrefabArray.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5914048280330796819, guid: bd20cacb241bef641b48fae95b840e17,
-        type: 3}
       propertyPath: waveDifficulty
-      value: 2
+      value: 200
       objectReference: {fileID: 0}
-    - target: {fileID: 5914048280330796819, guid: bd20cacb241bef641b48fae95b840e17,
-        type: 3}
-      propertyPath: delayBetweenWaves
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5914048280330796819, guid: bd20cacb241bef641b48fae95b840e17,
-        type: 3}
-      propertyPath: mobPrefabArray.Array.data[1]
-      value: 
-      objectReference: {fileID: 7973492598440114357, guid: a8764a742754f2945b12d45ca78eeeb7,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd20cacb241bef641b48fae95b840e17, type: 3}
 --- !u!1001 &7973492598767335452

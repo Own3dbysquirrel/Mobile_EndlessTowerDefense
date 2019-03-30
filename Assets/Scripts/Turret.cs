@@ -24,6 +24,8 @@ public class Turret : MonoBehaviour
     public float bulletSpeedUpgradeMultiplier = 1.01f;
     public float fireSpeedUpgradeDivider = 1.1f;
 
+
+
     private List<GameObject> _bulletsPool = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -84,6 +86,7 @@ public class Turret : MonoBehaviour
     void RemoveTargetFromList(Mob target)
     {
         _mobsInRange.Remove(target);
+        target.OnTargetDeath -= RemoveTargetFromList;
     }
 
 

@@ -12,11 +12,6 @@ public class TurretBullet : MonoBehaviour
 
     public Transform target;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -28,11 +23,18 @@ public class TurretBullet : MonoBehaviour
 
     private void Movement()
     {
+
+        // Homing at target
         if(target != null && target.gameObject.activeSelf)
         {
             transform.up = target.position - transform.position;
         }
+        else
+        {
+            target = null;
+        }
         
+        // Forward movement
         float mov = Time.deltaTime * _movementSpeed;
         gameObject.transform.position += transform.up * mov;
     }
@@ -41,9 +43,12 @@ public class TurretBullet : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            if(other.GetComponent<Mob>())
-                other.GetComponent<Mob>().TakeDamage(_damage);
-
+            Mob mobScript = other.GetComponent<Mob>();
+            if (mobScript)
+            {               
+                mobScript.TakeDamage(_damage);
+            }
+            target = null;
             gameObject.SetActive(false);
         }
     }
@@ -54,7 +59,8 @@ public class TurretBullet : MonoBehaviour
     {
         Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
         if (viewPos.x < 0f || viewPos.x > 1f || viewPos.y < 0f || viewPos.y > 1f)
-        {
+        {      
+            target = null;
             gameObject.SetActive(false);
         }
 

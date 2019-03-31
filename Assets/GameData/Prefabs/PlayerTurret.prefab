@@ -299,13 +299,15 @@ MonoBehaviour:
   damage: 1
   reloadTime: 1
   bulletSpeed: 3
-  attackUpgradeMultiplier: 10
-  bulletSpeedUpgradeMultiplier: 1.1
-  fireSpeedUpgradeDivider: 10
+  attackUpgradeMultiplier: 1.1
+  bulletSpeedUpgradeMultiplier: 1.01
+  fireSpeedUpgradeDivider: 1.1
   costUpgradeMultiplier: 1.1
-  atkUpgradecost: 10
+  atkUpgradeCost: 10
   speedUpgradeCost: 10
+  atkUpgradebutton: {fileID: 0}
   atkUpgradeCostText: {fileID: 0}
+  speedUpgradebutton: {fileID: 0}
   speedUpgradeCostText: {fileID: 0}
 --- !u!50 &8082392117316486339
 Rigidbody2D:

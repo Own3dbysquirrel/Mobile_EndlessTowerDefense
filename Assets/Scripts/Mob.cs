@@ -88,7 +88,7 @@ public class Mob : MonoBehaviour
         // The enemy may not drop gold on death (ex : killed by the player zone)
         if(loot)
         {
-            CurrencyManager.currenManagerInstance.AddGold(goldDrop);
+            CurrencyManager.currencyManagerInstance.AddGold(goldDrop);
         }
     }
 

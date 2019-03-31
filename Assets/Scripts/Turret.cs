@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
   
@@ -37,16 +38,33 @@ public class Turret : MonoBehaviour
     public float costUpgradeMultiplier = 1.1f;
 
     
-    public int atkUpgradecost = 10;
+    public int atkUpgradeCost = 10;
     public int speedUpgradeCost = 10;
 
+    public Button atkUpgradebutton;
     public TextMeshProUGUI atkUpgradeCostText;
+
+    public Button speedUpgradebutton;
     public TextMeshProUGUI speedUpgradeCostText;
+
+    private string _goldStringDisplay;
 
 
     private List<GameObject> _bulletsPool = new List<GameObject>();
 
-   
+    private CurrencyManager _currencyManager;
+
+
+    private void Start()
+    {
+        _currencyManager = CurrencyManager.currencyManagerInstance;
+
+        _currencyManager.OnGold += LockUpgrade;
+
+        atkUpgradeCostText.text = atkUpgradeCost.ToString();
+        speedUpgradeCostText.text = speedUpgradeCost.ToString();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -177,7 +195,7 @@ public class Turret : MonoBehaviour
     public void UpgradeAttack()
     {
 
-       CurrencyManager.currenManagerInstance.AddGold(-atkUpgradecost);
+        _currencyManager.AddGold(-atkUpgradeCost);
 
        if((Mathf.Round((float)damage * attackUpgradeMultiplier) == damage))
         {
@@ -188,21 +206,41 @@ public class Turret : MonoBehaviour
             damage = (int) Mathf.Round((float)damage * attackUpgradeMultiplier);
         }
 
-      atkUpgradecost = (int)Mathf.Round(atkUpgradecost * costUpgradeMultiplier);
-      atkUpgradeCostText.text = atkUpgradecost.ToString();
+      atkUpgradeCost = (int)Mathf.Round(atkUpgradeCost * costUpgradeMultiplier);
+      atkUpgradeCostText.text = UpgradeCostFormat(atkUpgradeCost);
 
 
     }
 
     public void UpgradeSpeed()
     {
-        CurrencyManager.currenManagerInstance.AddGold(-speedUpgradeCost);
+        _currencyManager.AddGold(-speedUpgradeCost);
 
         bulletSpeed *= bulletSpeedUpgradeMultiplier;
         reloadTime /= fireSpeedUpgradeDivider;
 
         speedUpgradeCost = (int)Mathf.Round(speedUpgradeCost * costUpgradeMultiplier);
-        speedUpgradeCostText.text = speedUpgradeCost.ToString();
+        speedUpgradeCostText.text = UpgradeCostFormat(speedUpgradeCost);
+    }
+
+    private string UpgradeCostFormat(int amount)
+    {
+        _goldStringDisplay = amount.ToString();
+        // If the gold amount is too big, display it with K, M ,B symbols (thousand, million, billion)
+        if (amount >= 1000)
+        {
+            _goldStringDisplay = ((float)amount / 1000f).ToString() + " K";
+        }
+        if (amount >= 1000000)
+        {
+            _goldStringDisplay = ((float)amount / 1000000f).ToString() + " M";
+        }
+        if (amount >= 1000000000)
+        {
+            _goldStringDisplay = ((float)amount / 1000000000f).ToString() + " B";
+        }
+
+        return _goldStringDisplay;
     }
 
     private void SpecialAttack()
@@ -211,6 +249,10 @@ public class Turret : MonoBehaviour
     }
 
 
-
-
+    // If one of the upgrade costs more than the player gold, disable the button
+    public void LockUpgrade()
+    {
+        atkUpgradebutton.interactable = atkUpgradeCost <= _currencyManager.gold;
+        speedUpgradebutton.interactable = speedUpgradeCost <= _currencyManager.gold;
+    }
 }

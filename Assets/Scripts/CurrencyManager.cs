@@ -13,11 +13,11 @@ public class CurrencyManager : MonoBehaviour
     private string goldStringDisplay;
 
     // This script is a singleton, so the gold amount of the player can be easily accessible from anywhere
-    public static CurrencyManager currenManagerInstance;
+    public static CurrencyManager currencyManagerInstance;
 
     private void Awake()
     {
-        currenManagerInstance = this;
+        currencyManagerInstance = this;
     }
 
     void Start()
@@ -30,7 +30,6 @@ public class CurrencyManager : MonoBehaviour
     // Called when a mob is killed or an upgrade purchased (then the amount should be negative)
     public void AddGold(int amount)
     {
-
         gold += amount;
         goldStringDisplay = gold.ToString();
 
@@ -49,6 +48,9 @@ public class CurrencyManager : MonoBehaviour
         }
 
         _goldText.text = goldStringDisplay;
+
+        // This events informs the other scripts that the gold amount of the player has changed.
+        OnGold?.Invoke();
     }
 
     public delegate void GoldEvent();

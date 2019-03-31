@@ -46,9 +46,8 @@ MonoBehaviour:
   isEnabled: 1
   delayBetweenWaves: 10
   waveIndex: 0
-  waveDifficulty: 100
+  waveDifficulty: 2
   waveDifficultyMultiplier: 1.1
-  maxMobsOnScreen: 0
   mobPrefabArray:
   - {fileID: 7973492598440114357, guid: 34952a0e027590249bd98aed50488a50, type: 3}
   - {fileID: 7973492598440114357, guid: a8764a742754f2945b12d45ca78eeeb7, type: 3}

@@ -14,8 +14,7 @@ public class Mob : MonoBehaviour
     public float difficultyScore = 1f;
 
     [Tooltip("The amount of gold the enemy will drop on his death. This value is multiplied by the scaling ratio.")]
-    public RangeInt goldDropRange;
-    private int _goldDrop;
+    public int goldDrop = 1;
 
     [Tooltip("The life and goldDrop of the enemy will be multiplied by this value, which is determined by the difficulty of the wave")]
     public float scalingRatio = 1;
@@ -23,24 +22,26 @@ public class Mob : MonoBehaviour
     public Text lifeDisplay;
 
     private int _baseLife;
+    private int _baseGoldDrop;
 
-   void Awake()
+    void Awake()
     {
         _baseLife = _life;
+        _baseGoldDrop = goldDrop;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _life = (int) Mathf.Round(_baseLife * scalingRatio);        
-        _goldDrop = (int) Mathf.Round(Random.Range(goldDropRange.start, goldDropRange.end + 1) * scalingRatio);                
+        _life = (int) Mathf.Round(_baseLife * scalingRatio);
+        goldDrop = (int) Mathf.Round(_baseGoldDrop * scalingRatio);              
         lifeDisplay.text = _life.ToString();      
     }
 
     void OnEnable()
     {
-        _life = (int) Mathf.Round(_baseLife * scalingRatio);      
-        _goldDrop = (int) Mathf.Round(Random.Range(goldDropRange.start, goldDropRange.end + 1) * scalingRatio);               
+        _life = (int) Mathf.Round(_baseLife * scalingRatio);
+        goldDrop = (int)Mathf.Round(_baseGoldDrop * scalingRatio);
         lifeDisplay.text = _life.ToString();
     }
 
@@ -73,15 +74,22 @@ public class Mob : MonoBehaviour
         lifeDisplay.text = _life.ToString();
         if (_life <= 0)
         {
-            Death();
+            Death(true);
         }
     }
 
-    private void Death()
+    public void Death(bool loot)
     {
         // This events informs the Player Turrets that the enemy died
         OnTargetDeath?.Invoke(this);
         gameObject.SetActive(false);
+
+
+        // The enemy may not drop gold on death (ex : killed by the player zone)
+        if(loot)
+        {
+            CurrencyManager.currenManagerInstance.AddGold(goldDrop);
+        }
     }
 
 

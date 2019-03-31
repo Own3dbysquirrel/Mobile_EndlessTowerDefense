@@ -223,6 +223,7 @@ MonoBehaviour:
   _life: 2
   MovementSpeed: 0.25
   difficultyScore: 1.5
+  goldDrop: 3
   scalingRatio: 1
   lifeDisplay: {fileID: 7973492598442522680}
 --- !u!50 &763429035

@@ -21,6 +21,7 @@ public class PlayerZone : MonoBehaviour
     {
         if(other.tag == "Enemy")
         {
+            other.GetComponent<Mob>().Death(false);
             Debug.Log("Game Over");
         }
     }

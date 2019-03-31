@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using TMPro;
 
 public class Turret : MonoBehaviour
   
@@ -19,21 +20,33 @@ public class Turret : MonoBehaviour
     public int damage = 1;
     public float reloadTime = 1f;
     public float bulletSpeed = 3f;
-    
+
+    [Tooltip("The attack value of the turret is multiplied by this variable each time the player buys an Attack upgrade")]
     public float attackUpgradeMultiplier = 1.1f;
+
+
+    [Tooltip("The bullet's movement speed is multiplied by this variable each time the player buys a Speed upgrade")]
     public float bulletSpeedUpgradeMultiplier = 1.01f;
+
+
+
+    [Tooltip("The rate of fire of the turret is divided by this variable each time the player buys a Speed upgrade")]
     public float fireSpeedUpgradeDivider = 1.1f;
 
+    [Tooltip("The cost of the next upgrade in relation to the last one")]
+    public float costUpgradeMultiplier = 1.1f;
+
+    
+    public int atkUpgradecost = 10;
+    public int speedUpgradeCost = 10;
+
+    public TextMeshProUGUI atkUpgradeCostText;
+    public TextMeshProUGUI speedUpgradeCostText;
 
 
     private List<GameObject> _bulletsPool = new List<GameObject>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+   
     // Update is called once per frame
     void Update()
     {
@@ -163,6 +176,9 @@ public class Turret : MonoBehaviour
 
     public void UpgradeAttack()
     {
+
+       CurrencyManager.currenManagerInstance.AddGold(-atkUpgradecost);
+
        if((Mathf.Round((float)damage * attackUpgradeMultiplier) == damage))
         {
             damage++;
@@ -171,12 +187,22 @@ public class Turret : MonoBehaviour
         {
             damage = (int) Mathf.Round((float)damage * attackUpgradeMultiplier);
         }
+
+      atkUpgradecost = (int)Mathf.Round(atkUpgradecost * costUpgradeMultiplier);
+      atkUpgradeCostText.text = atkUpgradecost.ToString();
+
+
     }
 
     public void UpgradeSpeed()
     {
+        CurrencyManager.currenManagerInstance.AddGold(-speedUpgradeCost);
+
         bulletSpeed *= bulletSpeedUpgradeMultiplier;
         reloadTime /= fireSpeedUpgradeDivider;
+
+        speedUpgradeCost = (int)Mathf.Round(speedUpgradeCost * costUpgradeMultiplier);
+        speedUpgradeCostText.text = speedUpgradeCost.ToString();
     }
 
     private void SpecialAttack()

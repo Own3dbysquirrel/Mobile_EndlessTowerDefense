@@ -56,6 +56,9 @@ public class Turret : MonoBehaviour
 
     public GameObject specialBulletPrefab;
 
+    private Animator _myAnimator;
+
+
     private void Start()
     {
         _currencyManager = CurrencyManager.currencyManagerInstance;
@@ -66,7 +69,10 @@ public class Turret : MonoBehaviour
         speedUpgradeCostText.text = speedUpgradeCost.ToString();
 
 
-        //subscribe to the Special Bullet event
+        _myAnimator = GetComponent<Animator>();
+  
+
+        //Subscribe to the Special Bullet event
         SwipeWeapon.swipeWeaponInstance.OnSpecialAttackTrigger += SpecialAttack;
 
     }
@@ -215,7 +221,7 @@ public class Turret : MonoBehaviour
       atkUpgradeCost = (int)Mathf.Round(atkUpgradeCost * costUpgradeMultiplier);
       atkUpgradeCostText.text = UpgradeCostFormat(atkUpgradeCost);
 
-
+        _myAnimator.SetTrigger("GetUpgrade");
     }
 
     public void UpgradeSpeed()
@@ -227,6 +233,8 @@ public class Turret : MonoBehaviour
 
         speedUpgradeCost = (int)Mathf.Round(speedUpgradeCost * costUpgradeMultiplier);
         speedUpgradeCostText.text = UpgradeCostFormat(speedUpgradeCost);
+
+        _myAnimator.SetTrigger("GetUpgrade");
     }
 
     private string UpgradeCostFormat(int amount)

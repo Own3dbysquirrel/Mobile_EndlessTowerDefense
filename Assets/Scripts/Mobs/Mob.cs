@@ -26,10 +26,15 @@ public class Mob : MonoBehaviour
 
     public int MobType = 0;
 
+    private Animator _myAnimator;
+  
     void Awake()
     {
         _baseLife = _life;
         _baseGoldDrop = goldDrop;
+
+        _myAnimator = GetComponent<Animator>();
+       
     }
 
     // Start is called before the first frame update
@@ -57,9 +62,11 @@ public class Mob : MonoBehaviour
     {
         float mov = Time.deltaTime * MovementSpeed;
         gameObject.transform.position -= Vector3.up * mov;
+        gameObject.transform.rotation = Quaternion.identity;
+
 
         // if the mob is near the border of the screen, move toward center
-        if(Camera.main.WorldToViewportPoint(transform.position).x < 0.1f)
+        if (Camera.main.WorldToViewportPoint(transform.position).x < 0.1f)
         {
             gameObject.transform.position += Vector3.right * mov;
         }
@@ -74,6 +81,8 @@ public class Mob : MonoBehaviour
     {
         _life -= dmg;
         lifeDisplay.text = _life.ToString();
+
+        _myAnimator.SetTrigger("TakeDamage");
         if (_life <= 0)
         {
             Death(true);

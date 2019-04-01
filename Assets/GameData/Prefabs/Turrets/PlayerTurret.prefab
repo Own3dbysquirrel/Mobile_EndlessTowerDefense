@@ -260,6 +260,7 @@ GameObject:
   - component: {fileID: 8868778614680239153}
   - component: {fileID: 8082392117316486339}
   - component: {fileID: 8082392117316486338}
+  - component: {fileID: 5784833162837310304}
   m_Layer: 2
   m_Name: PlayerTurret
   m_TagString: Untagged
@@ -299,9 +300,9 @@ MonoBehaviour:
   damage: 1
   reloadTime: 1.5
   bulletSpeed: 3
-  attackUpgradeMultiplier: 1.1
+  attackUpgradeMultiplier: 1.05
   bulletSpeedUpgradeMultiplier: 1.01
-  fireSpeedUpgradeDivider: 1.1
+  fireSpeedUpgradeDivider: 1.05
   costUpgradeMultiplier: 1.1
   atkUpgradeCost: 10
   speedUpgradeCost: 10
@@ -348,3 +349,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 8
+--- !u!95 &5784833162837310304
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082392117316486337}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a2655066a57623c479fcea797584809b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

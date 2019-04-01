@@ -191,3 +191,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   swipeMaxDuration: 0.5
+  selectionFX: {fileID: 8942241698312202923, guid: cfbed724eb7d0934bb5c5deae43f942f,
+    type: 3}
+  mobsAmountToTrigger: 4

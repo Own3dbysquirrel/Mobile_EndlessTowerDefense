@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5684403337054792190}
   - component: {fileID: 4593735370157589349}
   - component: {fileID: 6063009655268416907}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 7903093174376087717}
   - component: {fileID: 6690545737363423628}
   - component: {fileID: 7767679040947664474}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 5831689841603736354}
   - component: {fileID: 8572827133010912297}
   - component: {fileID: 7864992078085160058}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 8868778614680239153}
   - component: {fileID: 8082392117316486339}
   - component: {fileID: 8082392117316486338}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayerTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8082392117316486337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.93, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1724100373779559618}

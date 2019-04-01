@@ -8,11 +8,10 @@ public class TurretBullet : MonoBehaviour
     public float _movementSpeed = 1f;
 
     [HideInInspector]
-    public int _damage = 1;
+    public int damage = 1;
 
     public Transform target;
-
-
+ 
     // Update is called once per frame
     void Update()
     {
@@ -46,7 +45,7 @@ public class TurretBullet : MonoBehaviour
             Mob mobScript = other.GetComponent<Mob>();
             if (mobScript)
             {               
-                mobScript.TakeDamage(_damage);
+                mobScript.TakeDamage(damage);
             }
             target = null;
             gameObject.SetActive(false);

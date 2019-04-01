@@ -21,10 +21,13 @@ public class SwipeWeapon : MonoBehaviour
 
     private List<Mob> _mobsStriked = new List<Mob>();
 
+    public static SwipeWeapon swipeWeaponInstance;
 
 
-    void Start()
+    void Awake()
     {
+        swipeWeaponInstance = this;
+
         _myCollider = GetComponent<Collider2D>();
         _myTrailRenderer = GetComponent<TrailRenderer>();
     }
@@ -141,9 +144,17 @@ public class SwipeWeapon : MonoBehaviour
 
             if (_mobsStriked.Count > 0)
             {
-                Debug.Log("ZA WOUARDOOOOO" + _mobsStriked.Count);
+                // TOOD : Call turret Special attacks
+                OnSpecialAttackTrigger(_mobsStriked.Count);
+
+
+
                 _mobsStriked = new List<Mob>();
             }
         }
     }
+
+    public delegate void SpecialAttackEvent(int enemyCount);
+    public event SpecialAttackEvent OnSpecialAttackTrigger;
+
 }

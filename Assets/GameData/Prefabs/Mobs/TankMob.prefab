@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bafda19104c0441824bbd2b8e716be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _life: 2
+  _life: 3
   MovementSpeed: 0.25
   difficultyScore: 1.5
   goldDrop: 2

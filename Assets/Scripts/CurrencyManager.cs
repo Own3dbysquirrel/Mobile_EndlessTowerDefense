@@ -36,15 +36,15 @@ public class CurrencyManager : MonoBehaviour
         // If the gold amount is too big, display it with K, M ,B symbols (thousand, million, billion)
         if (gold >= 1000)
         {
-            goldStringDisplay = ((float)gold / 1000f).ToString() + " K";
+            goldStringDisplay = ((float)gold / 1000f).ToString("F1") + " K";
         }
         if (gold >= 1000000)
         {
-            goldStringDisplay = ((float)gold / 1000000f).ToString() + " M";
+            goldStringDisplay = ((float)gold / 1000000f).ToString("F1") + " M";
         }
         if (gold >= 1000000000)
         {
-            goldStringDisplay = ((float)gold / 1000000000f).ToString() + " B";
+            goldStringDisplay = ((float)gold / 1000000000f).ToString("F1") + " B";
         }
 
         _goldText.text = goldStringDisplay;

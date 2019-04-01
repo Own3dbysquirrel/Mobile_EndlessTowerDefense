@@ -54,6 +54,7 @@ public class Turret : MonoBehaviour
 
     private CurrencyManager _currencyManager;
 
+    public GameObject specialBulletPrefab;
 
     private void Start()
     {
@@ -63,6 +64,11 @@ public class Turret : MonoBehaviour
 
         atkUpgradeCostText.text = atkUpgradeCost.ToString();
         speedUpgradeCostText.text = speedUpgradeCost.ToString();
+
+
+        //subscribe to the Special Bullet event
+        SwipeWeapon.swipeWeaponInstance.OnSpecialAttackTrigger += SpecialAttack;
+
     }
 
     // Update is called once per frame
@@ -147,7 +153,7 @@ public class Turret : MonoBehaviour
             TurretBullet bulletScript = newBullet.GetComponent<TurretBullet>();
 
             bulletScript.target = _target;
-            bulletScript._damage = damage;
+            bulletScript.damage = damage;
             bulletScript._movementSpeed = bulletSpeed;
 
             // Reset the reloadTimer after the turret fired;
@@ -229,22 +235,31 @@ public class Turret : MonoBehaviour
         // If the gold amount is too big, display it with K, M ,B symbols (thousand, million, billion)
         if (amount >= 1000)
         {
-            _goldStringDisplay = ((float)amount / 1000f).ToString() + " K";
+            _goldStringDisplay = ((float)amount / 1000f).ToString("F1") + " K";
         }
         if (amount >= 1000000)
         {
-            _goldStringDisplay = ((float)amount / 1000000f).ToString() + " M";
+            _goldStringDisplay = ((float)amount / 1000000f).ToString("F1") + " M";
         }
         if (amount >= 1000000000)
         {
-            _goldStringDisplay = ((float)amount / 1000000000f).ToString() + " B";
+            _goldStringDisplay = ((float)amount / 1000000000f).ToString("F1") + " B";
         }
 
         return _goldStringDisplay;
     }
 
-    private void SpecialAttack()
+    public void SpecialAttack(int enemyCount)
     {
+        GameObject specialBullet = Instantiate(specialBulletPrefab, null);
+
+        specialBullet.transform.position = transform.position;
+        specialBullet.transform.rotation = transform.rotation;
+
+        TurretSpecialBullet specialScript = specialBullet.GetComponent<TurretSpecialBullet>();
+        specialScript.damage =  damage * 5;
+        specialScript.movementSpeed = bulletSpeed * 5;
+
 
     }
 

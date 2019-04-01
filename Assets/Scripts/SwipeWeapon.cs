@@ -54,6 +54,7 @@ public class SwipeWeapon : MonoBehaviour
         else
         {
             SwipeEffect();
+
         }    
 
 
@@ -128,17 +129,21 @@ public class SwipeWeapon : MonoBehaviour
     }
 
     private void SwipeEffect()
-    {     
-        if (_mobsStriked.Count > 0 && _isSwipeWeaponActive == true)
+    {            
+     
+        if (_isSwipeWeaponActive)
         {
-            // Reset of the enemy striked list           
-            Debug.Log("ZA WOUARDOOOOO" + _mobsStriked.Count);
-            _mobsStriked = new List<Mob>();
             _isSwipeWeaponActive = false;
             _myCollider.enabled = false;
             _myTrailRenderer.emitting = false;
 
             swipeTimer = 0;
+
+            if (_mobsStriked.Count > 0)
+            {
+                Debug.Log("ZA WOUARDOOOOO" + _mobsStriked.Count);
+                _mobsStriked = new List<Mob>();
+            }
         }
     }
 }
